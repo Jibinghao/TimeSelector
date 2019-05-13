@@ -305,7 +305,7 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
             mTvConfirm.setText(confirmTitle);
         }
         if (TextUtils.isEmpty(title)) {
-            mTvTitle.setVisibility(View.GONE);
+            mTvTitle.setVisibility(View.INVISIBLE);
         } else {
             mTvTitle.setText(title);
         }
