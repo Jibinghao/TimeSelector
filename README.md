@@ -17,7 +17,7 @@
 
 ```
 dependencies {
-     implementation 'com.github.Jibinghao:TimeSelector:v1.0'
+     implementation 'com.github.Jibinghao:TimeSelector:v1.1'
 }
 
 ```
@@ -50,7 +50,7 @@ step 2.
 <dependency>
       <groupId>com.github.Jibinghao</groupId>
 	    <artifactId>TimeSelector</artifactId>
-	    <version>v1.0</version> 
+	    <version>v1.1</version> 
 </dependency>
 
 ```
