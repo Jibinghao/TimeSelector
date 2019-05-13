@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black_353535">#FF353535</color>
+    <color name="gray_939393">#FF939393</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow_fec500">#fffec500</color>
+    <color name="bh_grey_d2d2d2">#D2D2D2</color>
+    <color name="bh_black_353535">#353535</color>
+
+</resources>
