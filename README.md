@@ -54,14 +54,43 @@ step 2.
 </dependency>
 
 ```
+## 功能配置
+```
+// 显示时间选择器 以下是例子：用不到的api可以不写
+    TimeSelector.getInstance()
+                .setActivity(this)
+                .setTitle("选择时间") //弹窗标题
+                .setCancelTitle("取消") //取消按钮的文字
+                .setConfirmTitle("确定") //确定按钮的文字
+                .setCancelTextColor(Color.BLUE) //取消按钮的颜色
+                .setConfirmTextColor(Color.RED) //确定按钮的颜色
+                .setCycle(false) //是否支持数据循环
+                .setBlur(true) //是否支持背景高斯模糊
+                .setFiveSecondInterval(false) //秒的数据是否为5的倍数
+                .setTimeSelectCallBack(new TimeSelectCallBack() {
+                    @Override
+                    public void onChoose(String formatTime, long originTime) {
+                        Log.d(TAG, formatTime);
+                        Log.d(TAG, originTime + "");
+                        Toast.makeText(MainActivity.this, formatTime, Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .show();
+``` 
 
 ## 更新日志
 
 # 当前版本：
-* v1.0
-* 1.init
+* v1.1
+* 1.增加取消文字，确定文字的文本及颜色设置；
+* 2.增加背景高斯模糊的选项
 
 # 历史版本：
+* v1.1
+* 1.增加取消文字，确定文字的文本及颜色设置；
+* 2.增加背景高斯模糊的选项
+
 * v1.0
 * 1.init
 
