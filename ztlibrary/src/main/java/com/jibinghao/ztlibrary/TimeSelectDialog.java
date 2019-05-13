@@ -58,6 +58,8 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
     private int mDayPosition;
     private int mHourPosition;
     private int mMinutePosition;
+    private int mMinuteDivisor;//除数
+
 
     TimeSelectCallBack timeSelectCallBack;
     String title;
@@ -75,6 +77,14 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
     private DayTextAdapter dayTextAdapter;
     private HourTextAdapter hourTextAdapter;
     private MinuteTextAdapter minuteTextAdapter;
+    boolean isBlur = true;//是否需要模糊 默认为开启
+    String cancelTitle;//取消的文字
+    String confirmTitle;//确定的文字
+    boolean isCycle;//是否循环数据
+    boolean isFiveSecondInterval;//是否使用5秒间隔
+    int cancelTextColor;
+    int confirmTextColor;
+
 
     public TimeSelectDialog(Activity activity, String title, TimeSelectCallBack timeSelectCallBack) {
         super(activity, R.style.WheelViewDialog);
@@ -98,13 +108,13 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         mWvYear.setVisibleItems(3);
         mWvYear.setViewAdapter(yearTextAdapter);
         mWvYear.setCurrentItem(mYearPosition);
-        mWvYear.setCyclic(true);
+        mWvYear.setCyclic(isCycle);
 
         monthTextAdapter = new MonthTextAdapter(context, monthList, mMonthPosition, maxTextSize, minTextSize);
         mWvMonth.setVisibleItems(3);
         mWvMonth.setViewAdapter(monthTextAdapter);
         mWvMonth.setCurrentItem(mMonthPosition);
-        mWvMonth.setCyclic(true);
+        mWvMonth.setCyclic(isCycle);
 
         dayTextAdapter = new DayTextAdapter(context, dayList, mDayPosition, maxTextSize, minTextSize);
         mWvDay.setVisibleItems(2);
@@ -116,13 +126,13 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         mWvHour.setVisibleItems(3);
         mWvHour.setViewAdapter(hourTextAdapter);
         mWvHour.setCurrentItem(mHourPosition);
-        mWvHour.setCyclic(true);
+        mWvHour.setCyclic(isCycle);
 
         minuteTextAdapter = new MinuteTextAdapter(context, minuteList, mMinutePosition, maxTextSize, minTextSize);
         mWvMinute.setVisibleItems(3);
         mWvMinute.setViewAdapter(minuteTextAdapter);
         mWvMinute.setCurrentItem(mMinutePosition);
-        mWvMinute.setCyclic(true);
+        mWvMinute.setCyclic(isCycle);
 
 
         //年份的监听
@@ -226,12 +236,7 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
                 setTextViewSize(currentText, minuteTextAdapter);
             }
         });
-        if (TextUtils.isEmpty(title)) {
-            mTvTitle.setVisibility(View.GONE);
-        } else {
-            mTvTitle.setText(title);
 
-        }
 
     }
 
@@ -285,19 +290,57 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         mWvMinute = (WheelView) findViewById(R.id.wv_minute);
         mTvConfirm.setOnClickListener(this);
         mTvCancel.setOnClickListener(this);
-        mIvBg.setImageBitmap(ImageUtils.fastBlur(ScreenUtils.screenShot(context, false), 0.1f, 5));
+        if (isBlur) {
+            mIvBg.setVisibility(View.VISIBLE);
+
+            mIvBg.setImageBitmap(ImageUtils.fastBlur(ScreenUtils.screenShot(context, true), 0.1f, 5));
+        } else {
+            mIvBg.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(cancelTitle)) {
+            mTvCancel.setText(cancelTitle);
+        }
+
+        if (!TextUtils.isEmpty(confirmTitle)) {
+            mTvConfirm.setText(confirmTitle);
+        }
+        if (TextUtils.isEmpty(title)) {
+            mTvTitle.setVisibility(View.GONE);
+        } else {
+            mTvTitle.setText(title);
+        }
+        if (cancelTextColor != 0) {
+            mTvCancel.setTextColor(cancelTextColor);
+        }
+
+        if (confirmTextColor != 0) {
+            mTvConfirm.setTextColor(confirmTextColor);
+        }
     }
 
     private void initData() {
-        for (int i = 0; i < 12; i++) {
-            if (i == 0) {
-                minuteList.add("00");
-            } else if (i == 1) {
-                minuteList.add("05");
-            } else {
-                minuteList.add(String.valueOf(i * 5));
+        if (isFiveSecondInterval) {
+            mMinuteDivisor = 5;
+            for (int i = 0; i < 12; i++) {
+                if (i == 0) {
+                    minuteList.add("00");
+                } else if (i == 1) {
+                    minuteList.add("05");
+                } else {
+                    minuteList.add(String.valueOf(i * 5));
+                }
+            }
+        } else {
+            mMinuteDivisor = 1;
+            for (int i = 0; i < 60; i++) {
+                if (i < 10) {
+                    minuteList.add("0" + i);
+                } else {
+                    minuteList.add(String.valueOf(i));
+                }
             }
         }
+
         for (int i = 1; i <= 12; i++) {
             hourList.add(String.valueOf(i));
         }
@@ -310,7 +353,7 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         mMonthPosition = day - 1;
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        mMinutePosition = minute / 5;
+        mMinutePosition = minute / mMinuteDivisor;
         if (hour == 12) {
             mDayPosition = 1;
             mHourPosition = 11;
@@ -380,5 +423,33 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         }
         String result = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";
         return result;
+    }
+
+    public void setBlur(boolean blur) {
+        isBlur = blur;
+    }
+
+    public void setCancelTitle(String cancelTitle) {
+        this.cancelTitle = cancelTitle;
+    }
+
+    public void setConfirmTitle(String confirmTitle) {
+        this.confirmTitle = confirmTitle;
+    }
+
+    public void setCycle(boolean cycle) {
+        isCycle = cycle;
+    }
+
+    public void setFiveSecondInterval(boolean fiveSecondInterval) {
+        isFiveSecondInterval = fiveSecondInterval;
+    }
+
+    public void setCancelTextColor(int cancelTextColor) {
+        this.cancelTextColor = cancelTextColor;
+    }
+
+    public void setConfirmTextColor(int confirmTextColor) {
+        this.confirmTextColor = confirmTextColor;
     }
 }
