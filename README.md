@@ -17,7 +17,7 @@
 
 ```
 dependencies {
-     implementation 'com.github.Jibinghao:TimeSelector:v1.1'
+     implementation 'com.github.Jibinghao:TimeSelector:v1.2'
 }
 
 ```
@@ -50,7 +50,7 @@ step 2.
 <dependency>
       <groupId>com.github.Jibinghao</groupId>
 	    <artifactId>TimeSelector</artifactId>
-	    <version>v1.1</version> 
+	    <version>v1.2</version> 
 </dependency>
 
 ```
@@ -82,11 +82,14 @@ step 2.
 ## 更新日志
 
 # 当前版本：
-* v1.1
-* 1.增加取消文字，确定文字的文本及颜色设置；
-* 2.增加背景高斯模糊的选项
+* v1.2
+* 1.修复标题为空的bug
+
 
 # 历史版本：
+* v1.2
+* 1.修复标题为空的bug
+
 * v1.1
 * 1.增加取消文字，确定文字的文本及颜色设置；
 * 2.增加背景高斯模糊的选项
