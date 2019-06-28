@@ -25,6 +25,7 @@ public class TimeSelector {
 
     int cancelTextColor;
     int confirmTextColor;
+    boolean[] type = {true, true, true};//分别控制“年月”,“分”“秒”的显示或隐藏。
 
 
     public TimeSelector setCancelTextColor(int cancelTextColor) {
@@ -88,6 +89,11 @@ public class TimeSelector {
 
     }
 
+    public TimeSelector setType(boolean[] type) {
+        this.type = type;
+        return this;
+    }
+
     public void show() {
         TimeSelectDialog dialog = new TimeSelectDialog(activity, title, timeSelectCallBack);
         dialog.setBlur(isBlur);
@@ -97,6 +103,7 @@ public class TimeSelector {
         dialog.setConfirmTitle(confirmTitle);
         dialog.setCycle(isCycle);
         dialog.setFiveSecondInterval(isFiveSecondInterval);
+        dialog.setType(type);
         dialog.show();
     }
 }

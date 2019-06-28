@@ -85,6 +85,8 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
     int cancelTextColor;
     int confirmTextColor;
 
+    boolean[] type;//分别控制“年月”,“时”“分”的显示或隐藏。
+
 
     public TimeSelectDialog(Activity activity, String title, TimeSelectCallBack timeSelectCallBack) {
         super(activity, R.style.WheelViewDialog);
@@ -316,6 +318,18 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
         if (confirmTextColor != 0) {
             mTvConfirm.setTextColor(confirmTextColor);
         }
+        if (type != null) {
+            if (type.length >= 1) {
+                mWvYear.setVisibility(type[0] ? View.VISIBLE : View.GONE);
+                mWvMonth.setVisibility(type[0] ? View.VISIBLE : View.GONE);
+            }
+            if (type.length >= 2) {
+                mWvHour.setVisibility(type[1] ? View.VISIBLE : View.GONE);
+            }
+            if (type.length >= 3) {
+                mWvMinute.setVisibility(type[2] ? View.VISIBLE : View.GONE);
+            }
+        }
     }
 
     private void initData() {
@@ -447,6 +461,10 @@ public class TimeSelectDialog extends Dialog implements View.OnClickListener {
 
     public void setCancelTextColor(int cancelTextColor) {
         this.cancelTextColor = cancelTextColor;
+    }
+
+    public void setType(boolean[] type) {
+        this.type = type;
     }
 
     public void setConfirmTextColor(int confirmTextColor) {

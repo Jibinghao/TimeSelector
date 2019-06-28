@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCycle(false) //是否支持数据循环
                 .setBlur(true) //是否支持背景高斯模糊
                 .setFiveSecondInterval(false) //秒的数据是否为5的倍数
+                .setType(new boolean[]{true, true, true})
                 .setTimeSelectCallBack(new TimeSelectCallBack() {
                     @Override
                     public void onChoose(String formatTime, long originTime) {
