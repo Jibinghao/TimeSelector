@@ -17,7 +17,7 @@
 
 ```
 dependencies {
-     implementation 'com.github.Jibinghao:TimeSelector:v1.2'
+     implementation 'com.github.Jibinghao:TimeSelector:v1.3'
 }
 
 ```
@@ -50,7 +50,7 @@ step 2.
 <dependency>
       <groupId>com.github.Jibinghao</groupId>
 	    <artifactId>TimeSelector</artifactId>
-	    <version>v1.2</version> 
+	    <version>v1.3</version> 
 </dependency>
 
 ```
@@ -67,6 +67,7 @@ step 2.
                 .setCycle(false) //是否支持数据循环
                 .setBlur(true) //是否支持背景高斯模糊
                 .setFiveSecondInterval(false) //秒的数据是否为5的倍数
+		.setType(new boolean[]{true, true, true})//是否显示（年月日，时，分）
                 .setTimeSelectCallBack(new TimeSelectCallBack() {
                     @Override
                     public void onChoose(String formatTime, long originTime) {
@@ -82,11 +83,14 @@ step 2.
 ## 更新日志
 
 # 当前版本：
-* v1.2
-* 1.修复标题为空的bug
+* v1.3
+* 1.增加对年月日，时，分的显示隐藏控制
 
 
 # 历史版本：
+* v1.3
+* 1.增加对年月日，时，分的显示隐藏控制
+
 * v1.2
 * 1.修复标题为空的bug
 
